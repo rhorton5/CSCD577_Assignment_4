@@ -24,17 +24,6 @@
 #include <vtkSphereSource.h>
 
 int main (int argc, char *argv[]){
-  
-    //Set up Centers
-    int x, y, z;
-    printf("Enter your x center: ");
-    cin >> x;
-    printf("Enter your y center: ");
-    cin >> y;
-    printf("Enter your z center: ");
-    cin >> z;
-
-    
 
   vtkSmartPointer<vtkNamedColors> colors = vtkSmartPointer<vtkNamedColors>::New();
   vtkSmartPointer<vtkRenderer> ren1 = vtkSmartPointer<vtkRenderer>::New();
@@ -53,7 +42,7 @@ int main (int argc, char *argv[]){
 
   vtkSmartPointer<vtkPointSource> psource = vtkSmartPointer<vtkPointSource>::New();
                                   psource->SetNumberOfPoints(25);
-                                  psource->SetCenter(x,y,z);
+                                  psource->SetCenter(12,12,0);
                                   psource->SetRadius(2.0);
 
   vtkSmartPointer<vtkThresholdPoints> threshold = vtkSmartPointer<vtkThresholdPoints>::New();
@@ -81,7 +70,7 @@ int main (int argc, char *argv[]){
                                    vtkActor* sphereActor = vtkActor::New();
                                    sphereActor->SetMapper(sphereMapper);
                                    sphereActor->GetProperty()->SetColor(0.2, 0.63, 0.79);
-                                   sphereActor->SetPosition(x,y,z);
+                                   sphereActor->SetPosition(12,12,0);
 
   double range[2];
   range[0] = streamers->GetOutput()->GetPointData()->GetScalars()->GetRange()[0];
