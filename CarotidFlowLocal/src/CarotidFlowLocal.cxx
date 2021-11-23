@@ -24,6 +24,13 @@
 #include <vtkSphereSource.h>
 
 int main (int argc, char *argv[]){
+    float x, y, z;
+    printf("Please insert your x value: ");
+    cin >> x;
+    printf("Please insert your y value: ");
+    cin >> y;
+    printf("Please insert your z value: ");
+    cin >> z;
 
   vtkSmartPointer<vtkNamedColors> colors = vtkSmartPointer<vtkNamedColors>::New();
   vtkSmartPointer<vtkRenderer> ren1 = vtkSmartPointer<vtkRenderer>::New();
@@ -42,7 +49,7 @@ int main (int argc, char *argv[]){
 
   vtkSmartPointer<vtkPointSource> psource = vtkSmartPointer<vtkPointSource>::New();
                                   psource->SetNumberOfPoints(25);
-                                  psource->SetCenter(12,12,0);
+                                  psource->SetCenter(x,y,z);
                                   psource->SetRadius(2.0);
 
   vtkSmartPointer<vtkThresholdPoints> threshold = vtkSmartPointer<vtkThresholdPoints>::New();
@@ -70,7 +77,7 @@ int main (int argc, char *argv[]){
                                    vtkActor* sphereActor = vtkActor::New();
                                    sphereActor->SetMapper(sphereMapper);
                                    sphereActor->GetProperty()->SetColor(0.2, 0.63, 0.79);
-                                   sphereActor->SetPosition(12,12,0);
+                                   sphereActor->SetPosition(x,y,z);
 
   double range[2];
   range[0] = streamers->GetOutput()->GetPointData()->GetScalars()->GetRange()[0];
@@ -133,17 +140,19 @@ int main (int argc, char *argv[]){
   renWin->SetSize(640, 480);
 
   vtkSmartPointer<vtkCamera> cam1 = vtkSmartPointer<vtkCamera>::New();
-  cam1->SetViewUp(0, 1, 0);
-  cam1->SetPosition(0, 0, 50);
+  cam1->SetViewUp(0, 0, 1);
+  cam1->SetPosition(30, -50, 30);
   cam1->SetFocalPoint(9, 9, 5);
   ren1->SetActiveCamera(cam1);
 
   //Create Text
+  char text[150];
+  sprintf(text, "Velocity Distribution Inside the Cavity\nPoint = (%.2f,%.2f,%.2f)\n", x, y, z);
   vtkSmartPointer<vtkTextActor> textActor = vtkSmartPointer<vtkTextActor>::New();
-  textActor->SetInput("Local Velocity Distribution");
-  textActor->SetPosition(100, 20);
+  textActor->SetInput(text);
+  textActor->SetPosition(150, 10);
   textActor->GetTextProperty()->SetFontSize(24);
-  textActor->GetTextProperty()->SetColor(1.0, 0.0, 0.0);
+  textActor->GetTextProperty()->SetColor(0.0, 0.0, 0.0);
 
   //Create Axes
   vtkSmartPointer<vtkAxesActor> axes = vtkSmartPointer<vtkAxesActor>::New();
